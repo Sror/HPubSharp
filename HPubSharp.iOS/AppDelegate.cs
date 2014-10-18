@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using MonoTouch.Foundation;
+﻿using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
+using System;
 
 namespace HPubSharp.iOS
 {
@@ -26,17 +23,22 @@ namespace HPubSharp.iOS
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
+			var Book = new Book ();
+
 			Forms.Init ();
 
 			// create a new window instance based on the screen size
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 
 			// defined a root view controller
-			window.RootViewController = App.GetMainPage ().CreateViewController ();
+			window.RootViewController = App.GetMainPage (Book).CreateViewController ();
 
 			// make the window visible
-			window.MakeKeyAndVisible ();
-
+			try {
+				window.MakeKeyAndVisible ();
+			} catch (Exception e) {
+				Console.WriteLine ("An error occurred: '{0}'", e);
+			}
 			return true;
 		}
 	}

@@ -16,6 +16,11 @@ namespace HPubSharp
 		{
 			return new MainPage ();
 		}
+
+		public static Page GetMainPage (IBook book)
+		{
+			return new MainPage (book);
+		}
 	}
 }
 
