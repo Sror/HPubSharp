@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default-Portrait.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -181,5 +182,14 @@
     <Content Include="Bookshelf\book\images\2-07-a.gif" />
     <Content Include="Bookshelf\book\js\Hyphenator.js" />
     <Content Include="Bookshelf\book\js\blood.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub_150.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub-72.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub-80.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub-40.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub-58.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub-29.png" />
   </ItemGroup>
 </Project>
