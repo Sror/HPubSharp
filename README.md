@@ -10,7 +10,7 @@ Project Requirments
 - Open and read hPub.
   - Parse book.json
   - Load relative html files.
-  - Re assetsfrence 
+  - Refrence assets
 - Display content element.
 - Switch views between content emements via left and right swipes.
 - Partial unit test coverage for iOS custom classes.
