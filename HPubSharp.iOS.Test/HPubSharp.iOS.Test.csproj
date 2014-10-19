@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{1AE7817E-6E76-480D-A1B6-A08464D78120}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>HPubSharp.iOS.Test</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>HPubSharpiOSTest</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchDebug>true</MtouchDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <ConsolePause>false</ConsolePause>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <BuildIpa>true</BuildIpa>
+    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <ConsolePause>false</ConsolePause>
+    <CodesignProvision>Automatic:AppStore</CodesignProvision>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="MonoTouch.NUnitLite" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="UnitTestAppDelegate.cs" />
+    <Compile Include="Tests.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\HPubSharp.iOS\HPubSharp.iOS.csproj">
+      <Project>{6AF8F015-616B-4A1F-AB3F-60DF78A4B3FF}</Project>
+      <Name>HPubSharp.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HPubSharp\HPubSharp.csproj">
+      <Project>{22665803-605B-49B9-90F8-B8EEC701486D}</Project>
+      <Name>HPubSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Bookshelf\book\Book Cover.html" />
+    <Content Include="Bookshelf\book\Book Index.html" />
+    <Content Include="Bookshelf\book\book.json" />
+    <Content Include="Bookshelf\book\css\book.css" />
+    <Content Include="Bookshelf\book\css\index.css" />
+    <Content Include="Bookshelf\book\gfx\background.jpg" />
+    <Content Include="Bookshelf\book\gfx\background-landscape.png" />
+    <Content Include="Bookshelf\book\gfx\background-portrait.png" />
+    <Content Include="Bookshelf\book\gfx\baker-badge.png" />
+    <Content Include="Bookshelf\book\gfx\baker-framework-badge.png" />
+    <Content Include="Bookshelf\book\gfx\blood.png" />
+    <Content Include="Bookshelf\book\gfx\blood-drop.png" />
+    <Content Include="Bookshelf\book\gfx\cover-image.png" />
+    <Content Include="Bookshelf\book\gfx\dots-menu.png" />
+    <Content Include="Bookshelf\book\images\1-01-a.gif" />
+    <Content Include="Bookshelf\book\images\1-01-b.gif" />
+    <Content Include="Bookshelf\book\images\1-02-a.gif" />
+    <Content Include="Bookshelf\book\images\1-02-b.gif" />
+    <Content Include="Bookshelf\book\images\1-03-a.gif" />
+    <Content Include="Bookshelf\book\images\1-03-b.gif" />
+    <Content Include="Bookshelf\book\images\1-04-a.gif" />
+    <Content Include="Bookshelf\book\images\1-04-b.gif" />
+    <Content Include="Bookshelf\book\images\1-05-a.gif" />
+    <Content Include="Bookshelf\book\images\1-06-a.gif" />
+    <Content Include="Bookshelf\book\images\1-06-b.gif" />
+    <Content Include="Bookshelf\book\images\1-07-a.gif" />
+    <Content Include="Bookshelf\book\images\1-07-b.gif" />
+    <Content Include="Bookshelf\book\images\2-01-a.gif" />
+    <Content Include="Bookshelf\book\images\2-01-b.gif" />
+    <Content Include="Bookshelf\book\images\2-02-a.gif" />
+    <Content Include="Bookshelf\book\images\2-02-b.gif" />
+    <Content Include="Bookshelf\book\images\2-03-a.gif" />
+    <Content Include="Bookshelf\book\images\2-04-a.gif" />
+    <Content Include="Bookshelf\book\images\2-04-b.gif" />
+    <Content Include="Bookshelf\book\images\2-05-a.gif" />
+    <Content Include="Bookshelf\book\images\2-06-a.gif" />
+    <Content Include="Bookshelf\book\images\2-06-b.gif" />
+    <Content Include="Bookshelf\book\images\2-07-a.gif" />
+    <Content Include="Bookshelf\book\index.html" />
+    <Content Include="Bookshelf\book\js\blood.js" />
+    <Content Include="Bookshelf\book\js\Hyphenator.js" />
+    <Content Include="Bookshelf\book\Part1-01.html" />
+    <Content Include="Bookshelf\book\Part1-02.html" />
+    <Content Include="Bookshelf\book\Part1-03.html" />
+    <Content Include="Bookshelf\book\Part1-04.html" />
+    <Content Include="Bookshelf\book\Part1-05.html" />
+    <Content Include="Bookshelf\book\Part1-06.html" />
+    <Content Include="Bookshelf\book\Part1-07.html" />
+    <Content Include="Bookshelf\book\Part2-01.html" />
+    <Content Include="Bookshelf\book\Part2-02.html" />
+    <Content Include="Bookshelf\book\Part2-03.html" />
+    <Content Include="Bookshelf\book\Part2-04.html" />
+    <Content Include="Bookshelf\book\Part2-05.html" />
+    <Content Include="Bookshelf\book\Part2-06.html" />
+    <Content Include="Bookshelf\book\Part2-07.html" />
+    <Content Include="Bookshelf\book\Tail.html" />
+  </ItemGroup>
+</Project>
