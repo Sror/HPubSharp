@@ -12,14 +12,9 @@ namespace HPubSharp
 		/// Returns the main view controller generated from the xaml.
 		/// </summary>
 		/// <returns>The main page view.</returns>
-		public static Page GetMainPage ()
-		{
-			return new MainPage ();
-		}
-
 		public static Page GetMainPage (IBook book)
 		{
-			return new MainPage (book);
+			return new BookView (book);
 		}
 	}
 }

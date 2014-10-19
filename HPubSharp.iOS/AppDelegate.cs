@@ -38,6 +38,7 @@ namespace HPubSharp.iOS
 				window.MakeKeyAndVisible ();
 			} catch (Exception e) {
 				Console.WriteLine ("An error occurred: '{0}'", e);
+				//TODO Add App Specfix Error and gracefun exit. 
 			}
 			return true;
 		}
