@@ -7,7 +7,7 @@ A Demo iPad app written in Xamarin Studio to read hPub files.
 Project Requirments
 -------------------
 
-- Open and read hPub.
+- Open and read hPub document.
   - Parse book.json
   - Load relative html files.
   - Refrence assets
