@@ -12,7 +12,7 @@ Project Requirments
   - Load relative html files.
   - Refrence assets
 - Display content element.
-- Switch views between content emements via left and right swipes.
+- Switch views between content elements via left and right swipes.
 - Partial unit test coverage for iOS custom classes.
 - Be compleated before deadline.
 
