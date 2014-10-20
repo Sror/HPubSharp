@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace HPubSharp
 {
 	/// <summary>
-	/// Creates a book ContentPage. 
+	/// Creates a book's ContentPage. 
 	/// </summary>
 	public partial class BookPage: ContentPage
 	{
@@ -17,7 +15,7 @@ namespace HPubSharp
 		{
 			InitializeComponent ();
 
-			var MainWebView = new BaseUrlWebView (); // temporarily use this so we can custom-render in iOS
+			var PageWebView = new BaseUrlWebView (); // temporarily use this so we can custom-render in iOS
 			var HtmlSource = new HtmlWebViewSource ();
 
 			HtmlSource.Html = content;
@@ -26,11 +24,11 @@ namespace HPubSharp
 				HtmlSource.BaseUrl = DependencyService.Get<IBaseUrl> ().Get ();
 			}
 				
-			//Add HTML Source to view
-			MainWebView.Source = HtmlSource;
+			//Add HTML Source to WebView
+			PageWebView.Source = HtmlSource;
 
-			//Set Content to MainWebView
-			this.Content = MainWebView;
+			//Set Content to WebView
+			this.Content = PageWebView;
 		}
 	}
 }
