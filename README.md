@@ -3,7 +3,6 @@ HPubSharp
 
 A Demo iPad app written in Xamarin Studio to read hPub files. 
 
-
 Project Requirments
 -------------------
 
@@ -17,3 +16,5 @@ Project Requirments
 - Be compleated before deadline.
 
 **Deadline: Oct. 20th, 2014 at 5:00pm CST**
+
+| "Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live." - Rick  Osborne
