@@ -15,6 +15,11 @@ namespace HPubSharp
 		{
 			return new BookView (book);
 		}
+
+		public static Page GetMainPage (IBookshelf bookshelf)
+		{
+			return new NavigationPage (new BookShelfPage (bookshelf));
+		}
 	}
 }
 

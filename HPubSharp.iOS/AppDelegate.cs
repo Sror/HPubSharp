@@ -23,15 +23,24 @@ namespace HPubSharp.iOS
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
-			var Book = new Book ();
+
 
 			Forms.Init ();
 
 			// create a new window instance based on the screen size
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 
-			// defined a root view controller
-			window.RootViewController = App.GetMainPage (Book).CreateViewController ();
+			if (Configs.UseBookshelf) {
+				var BookShelf = new Bookshelf ();
+
+				// defined a root view controller 
+				window.RootViewController = App.GetMainPage (BookShelf).CreateViewController ();
+			} else {
+				var Book = new Book (Configs.BookshelfPath + "book/");
+
+				// defined a root view controller
+				window.RootViewController = App.GetMainPage (Book).CreateViewController ();
+			}
 
 			// make the window visible
 			try {
