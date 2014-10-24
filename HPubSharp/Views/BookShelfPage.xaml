@@ -4,23 +4,11 @@
 	    <OnPlatform x:TypeArguments="Thickness"
 	                iOS="0, 20, 0, 0" />
     </ContentPage.Padding>
-	<ContentPage.Content>
-		<Grid x:Name="MainGrid" VerticalOptions="FillAndExpand">
-		    <Grid.RowDefinitions>
-			      <RowDefinition Height="Auto" />
-		    </Grid.RowDefinitions>
-
-		    <Grid.ColumnDefinitions>
-			      <ColumnDefinition Width="25*" />
-			      <ColumnDefinition Width="25*" />
-			      <ColumnDefinition Width="25*" />
-			      <ColumnDefinition Width="25*" />
-		    </Grid.ColumnDefinitions>
-
-		    <BoxView Color="White"
-             HeightRequest="0"
-             Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="4" />
-             <StackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
+    <ContentPage.Content>
+    	 <StackLayout x:Name="MainView">			    
+	 		<BoxView Color="White"
+             HeightRequest="0"/>
+             <StackLayout>
 	              <Label Text=" " 
 	             		VerticalOptions="Center"
 	             		HorizontalOptions="Center"
@@ -32,7 +20,21 @@
 	             		VerticalOptions="Center"
 	             		HorizontalOptions="Center"
 	             		Font="Large" />
-             </StackLayout>
-		</Grid>
+	             <Label Text=" " 
+	             		VerticalOptions="Center"
+	             		HorizontalOptions="Center"
+	             		Font="Large" />
+            </StackLayout>
+			<ScrollView x:Name="BookShelfContentView">
+				<Grid x:Name="BookShelfContentGrid" VerticalOptions="FillAndExpand">
+				    <Grid.ColumnDefinitions>
+					      <ColumnDefinition Width="25*" />
+					      <ColumnDefinition Width="25*" />
+					      <ColumnDefinition Width="25*" />
+					      <ColumnDefinition Width="25*" />
+				    </Grid.ColumnDefinitions>
+				</Grid>
+			 </ScrollView>
+		 </StackLayout>		
 	</ContentPage.Content>
 </ContentPage>

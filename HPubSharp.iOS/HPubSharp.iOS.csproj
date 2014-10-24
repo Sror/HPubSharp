@@ -93,10 +93,15 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.1.2.3.6257\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ZipArchive">
+      <HintPath>..\Components\ZipArchive-1.0.0.1\lib\ios\ZipArchive.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -131,65 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bookshelf\" />
-    <Folder Include="Bookshelf\book\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Bookshelf\book\book.json" />
-    <Content Include="Bookshelf\book\gfx\background-landscape.png" />
-    <Content Include="Bookshelf\book\gfx\background-portrait.png" />
-    <Content Include="Bookshelf\book\gfx\background.jpg" />
-    <Content Include="Bookshelf\book\gfx\baker-badge.png" />
-    <Content Include="Bookshelf\book\gfx\baker-framework-badge.png" />
-    <Content Include="Bookshelf\book\gfx\blood-drop.png" />
-    <Content Include="Bookshelf\book\gfx\blood.png" />
-    <Content Include="Bookshelf\book\gfx\cover-image.png" />
-    <Content Include="Bookshelf\book\gfx\dots-menu.png" />
-    <Content Include="Bookshelf\book\Book Cover.html" />
-    <Content Include="Bookshelf\book\Book Index.html" />
-    <Content Include="Bookshelf\book\Part1-01.html" />
-    <Content Include="Bookshelf\book\Part1-02.html" />
-    <Content Include="Bookshelf\book\Part1-03.html" />
-    <Content Include="Bookshelf\book\Part1-04.html" />
-    <Content Include="Bookshelf\book\Part1-05.html" />
-    <Content Include="Bookshelf\book\Part1-06.html" />
-    <Content Include="Bookshelf\book\Part1-07.html" />
-    <Content Include="Bookshelf\book\Part2-01.html" />
-    <Content Include="Bookshelf\book\Part2-02.html" />
-    <Content Include="Bookshelf\book\Part2-03.html" />
-    <Content Include="Bookshelf\book\Part2-04.html" />
-    <Content Include="Bookshelf\book\Part2-05.html" />
-    <Content Include="Bookshelf\book\Part2-06.html" />
-    <Content Include="Bookshelf\book\Part2-07.html" />
-    <Content Include="Bookshelf\book\Tail.html" />
-    <Content Include="Bookshelf\book\index.html" />
-    <Content Include="Bookshelf\book\css\book.css" />
-    <Content Include="Bookshelf\book\css\index.css" />
-    <Content Include="Bookshelf\book\images\1-01-a.gif" />
-    <Content Include="Bookshelf\book\images\1-01-b.gif" />
-    <Content Include="Bookshelf\book\images\1-02-a.gif" />
-    <Content Include="Bookshelf\book\images\1-02-b.gif" />
-    <Content Include="Bookshelf\book\images\1-03-a.gif" />
-    <Content Include="Bookshelf\book\images\1-03-b.gif" />
-    <Content Include="Bookshelf\book\images\1-04-a.gif" />
-    <Content Include="Bookshelf\book\images\1-04-b.gif" />
-    <Content Include="Bookshelf\book\images\1-05-a.gif" />
-    <Content Include="Bookshelf\book\images\1-06-a.gif" />
-    <Content Include="Bookshelf\book\images\1-06-b.gif" />
-    <Content Include="Bookshelf\book\images\1-07-a.gif" />
-    <Content Include="Bookshelf\book\images\1-07-b.gif" />
-    <Content Include="Bookshelf\book\images\2-01-a.gif" />
-    <Content Include="Bookshelf\book\images\2-01-b.gif" />
-    <Content Include="Bookshelf\book\images\2-02-a.gif" />
-    <Content Include="Bookshelf\book\images\2-02-b.gif" />
-    <Content Include="Bookshelf\book\images\2-03-a.gif" />
-    <Content Include="Bookshelf\book\images\2-04-a.gif" />
-    <Content Include="Bookshelf\book\images\2-04-b.gif" />
-    <Content Include="Bookshelf\book\images\2-05-a.gif" />
-    <Content Include="Bookshelf\book\images\2-06-a.gif" />
-    <Content Include="Bookshelf\book\images\2-06-b.gif" />
-    <Content Include="Bookshelf\book\images\2-07-a.gif" />
-    <Content Include="Bookshelf\book\js\Hyphenator.js" />
-    <Content Include="Bookshelf\book\js\blood.js" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
@@ -199,5 +145,11 @@
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub-40.png" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub-58.png" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Mistery_stub-29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="ZipArchive">
+      <Version>1.0.0.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>

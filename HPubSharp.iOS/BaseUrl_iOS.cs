@@ -12,6 +12,11 @@ namespace HPubSharp.iOS
 		{
 			return NSBundle.MainBundle.BundlePath;
 		}
+
+		public string Get (string baseUrl)
+		{
+			return (NSBundle.MainBundle.BundlePath.EndsWith ("/")) ? NSBundle.MainBundle.BundlePath + baseUrl : NSBundle.MainBundle.BundlePath + "/" + baseUrl;
+		}
 	}
 }
 

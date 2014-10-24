@@ -31,7 +31,7 @@ namespace HPubSharp.iOS
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 
 			if (Configs.UseBookshelf) {
-				var BookShelf = new Bookshelf ();
+				var BookShelf = new Bookshelf (@"http://media.todd-henderson.me/bookshelf.json");
 
 				// defined a root view controller 
 				window.RootViewController = App.GetMainPage (BookShelf).CreateViewController ();
@@ -47,7 +47,7 @@ namespace HPubSharp.iOS
 				window.MakeKeyAndVisible ();
 			} catch (Exception e) {
 				Console.WriteLine ("An error occurred: '{0}'", e);
-				//TODO Add App Specfix Error and gracefun exit. 
+				//TODO Add App Specfix Error and graceful exit. 
 			}
 			return true;
 		}

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 namespace HPubSharp
 {
 	public interface IBook
 	{
-
+	
 		IList<string> Author { get; }
 
 		bool AvailableLocally { get; set; }
@@ -18,9 +19,13 @@ namespace HPubSharp
 
 		string Icon { get; }
 
+		string Id { get; }
+
 		string Title { get; }
 
 		string Url { get; }
+
+		Task Download ();
 	}
 }
 

@@ -15,9 +15,9 @@ namespace HPubSharp.iOS
 		public override void LoadHtmlString (string s, NSUrl baseUrl)
 		{
 		
-			if (baseUrl == null) {
+			if (Device.OS == TargetPlatform.iOS) {
 				//TODO Un Hardcode the bookshelf Location
-				baseUrl = new NSUrl (NSBundle.MainBundle.BundlePath + @"/Bookshelf/book/", true);
+				baseUrl = new NSUrl (NSBundle.MainBundle.BundlePath + baseUrl.AbsoluteString.TrimStart ('.'), true);
 			}
 			base.LoadHtmlString (s, baseUrl);
 		}

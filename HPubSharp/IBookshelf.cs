@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HPubSharp
 {
@@ -11,6 +12,8 @@ namespace HPubSharp
 		bool Online { get; }
 
 		void AddBook (IBook book);
+
+		Task<IList<IBook>> DownloadableBooks ();
 	}
 }
 

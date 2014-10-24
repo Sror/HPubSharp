@@ -8,6 +8,8 @@ namespace HPubSharp
 	{
 		string Get ();
 
+		string Get (string baseUrl);
+
 	}
 
 	// required temporarily for iOS, due to BaseUrl bug

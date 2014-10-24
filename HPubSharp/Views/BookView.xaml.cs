@@ -1,7 +1,6 @@
 ﻿using System;
 
 using Xamarin.Forms;
-using Xamarin.Forms;
 
 namespace HPubSharp
 {
@@ -30,7 +29,7 @@ namespace HPubSharp
 			this.Title = book.Title;
 
 			foreach (string Content in book.Contents) {
-				this.Children.Add (new BookPage (Content));
+				this.Children.Add (new BookPage (Content, book.BasePath));
 			}
 
 
