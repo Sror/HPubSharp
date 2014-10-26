@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace HPubSharp
 {
-	public interface IBook
+	public interface IBook : INotifyPropertyChanged
 	{
 	
 		IList<string> Author { get; }

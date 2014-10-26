@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 using MiniZip.ZipArchive;
@@ -14,13 +16,21 @@ namespace HPubSharp.iOS
 	/// <summary>
 	/// Object refrencing the content of a hpub document.
 	/// </summary>
-	public class Book : IBook
+	public class Book : IBook, INotifyPropertyChanged
 	{
+		#region Public Properties
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		#endregion
+
 		#region Private Properties
 
 		JObject __BookJson;
 
+		bool __AvailableLocally;
 		IList<string> __Author;
+		string __BasePath;
 		IList<string> __Contents;
 		DateTime __Date;
 		#pragma warning disable 169
@@ -40,8 +50,12 @@ namespace HPubSharp.iOS
 		/// </summary>
 		/// <value>The base path.</value>
 		public string BasePath {  //TODO Add to device specific configurations.
-			get;
-			set;
+			get {
+				return __BasePath;
+			}
+			set {
+				__SetProperty (ref __BasePath, value);
+			}
 		}
 
 		/// <summary>
@@ -52,6 +66,9 @@ namespace HPubSharp.iOS
 			get {
 				return __Author;
 			}
+			private set {
+				__SetProperty (ref __Author, value);
+			}
 		}
 
 		/// <summary>
@@ -59,8 +76,12 @@ namespace HPubSharp.iOS
 		/// </summary>
 		/// <value>Is the hpub downloaded locally. </value>
 		public bool AvailableLocally {
-			get;
-			set;
+			get {
+				return __AvailableLocally;
+			}
+			set {
+				__SetProperty (ref __AvailableLocally, value);
+			}
 		}
 
 		/// <summary>
@@ -70,6 +91,9 @@ namespace HPubSharp.iOS
 		public IList<string> Contents {
 			get {
 				return __Contents;
+			}
+			private set {
+				__SetProperty (ref __Contents, value);
 			}
 		}
 
@@ -81,6 +105,9 @@ namespace HPubSharp.iOS
 			get {
 				return __Date;
 			}
+			private set {
+				__SetProperty (ref __Date, value);
+			}
 		}
 
 		/// <summary>
@@ -90,6 +117,9 @@ namespace HPubSharp.iOS
 		public string Icon {
 			get {
 				return __Icon;
+			}
+			private set {
+				__SetProperty (ref __Icon, value);
 			}
 		}
 
@@ -101,6 +131,9 @@ namespace HPubSharp.iOS
 			get {
 				return __Id;
 			}
+			private set {
+				__SetProperty (ref __Id, value);
+			}
 		}
 
 		/// <summary>
@@ -111,6 +144,9 @@ namespace HPubSharp.iOS
 			get {
 				return __Title;
 			}
+			private set {
+				__SetProperty (ref __Title, value);
+			}
 		}
 
 		/// <summary>
@@ -120,6 +156,9 @@ namespace HPubSharp.iOS
 		public string Url {
 			get {
 				return __Url;
+			}
+			private set {
+				__SetProperty (ref __Url, value);
 			}
 		}
 
@@ -191,18 +230,30 @@ namespace HPubSharp.iOS
 				BasePath = (localDir.EndsWith (Path.DirectorySeparatorChar.ToString (), StringComparison.Ordinal)) ? localDir : localDir + Path.DirectorySeparatorChar;
 				//Read book.json from hpub
 				__BookJson = JObject.Parse (File.ReadAllText (Path.Combine (BasePath + "book.json")));
-				__Contents = new List<string> ();
+				Contents = new List<string> ();
 
 				//Get the contents of each content page
 				foreach (string value in __BookJson ["contents"].ToObject<IList<string>> ()) {
 					var temp = File.ReadAllText (Path.Combine (BasePath + value));
-					__Contents.Add (temp);
+					Contents.Add (temp);
 				}
 				AvailableLocally = true;
 
 			} catch (Exception e) {
 				Console.WriteLine ("An error occurred: '{0}'", e);
 				//TODO Add App Specfix Error and graceful exit. 
+			}
+		}
+
+		#endregion
+
+		#region Protected Methods
+
+		protected virtual void _OnPropertyChanged (string propertyName)
+		{
+			PropertyChangedEventHandler handler = PropertyChanged;
+			if (handler != null) {
+				handler (this, new PropertyChangedEventArgs (propertyName));
 			}
 		}
 
@@ -221,21 +272,21 @@ namespace HPubSharp.iOS
 				//Read book.json from hpub
 				__BookJson = JObject.Parse (basePath);
 
-				__Author = __BookJson ["author"].ToObject<IList<string>> ();
-				__Title = (string)__BookJson ["title"];
-				__Url = (string)__BookJson ["url"];
-				__Date = DateTime.Parse ((string)__BookJson ["date"]);
+				Author = __BookJson ["author"].ToObject<IList<string>> ();
+				Title = (string)__BookJson ["title"];
+				Url = (string)__BookJson ["url"];
+				Date = DateTime.Parse ((string)__BookJson ["date"]);
 			} else if (File.Exists (basePath + @"book.json")) {
 
 				BasePath = (basePath.EndsWith (Path.DirectorySeparatorChar.ToString (), StringComparison.Ordinal)) ? basePath : basePath + Path.DirectorySeparatorChar;
 				//Read book.json from hpub
 				__BookJson = JObject.Parse (File.ReadAllText (Path.Combine (BasePath + "book.json")));
 
-				__Author = __BookJson ["author"].ToObject<IList<string>> ();
-				__Title = (string)__BookJson ["title"];
-				__Contents = new List<string> ();
-				__Url = (string)__BookJson ["url"];
-				__Date = DateTime.Parse ((string)__BookJson ["date"]);
+				Author = __BookJson ["author"].ToObject<IList<string>> ();
+				Title = (string)__BookJson ["title"];
+				Contents = new List<string> ();
+				Url = (string)__BookJson ["url"];
+				Date = DateTime.Parse ((string)__BookJson ["date"]);
 
 				//Get the contents of each content page
 				foreach (string value in __BookJson ["contents"].ToObject<IList<string>> ()) {
@@ -245,7 +296,7 @@ namespace HPubSharp.iOS
 				AvailableLocally = true;
 			}
 
-			__Id = Url.GetHashCode ().ToString ();
+			Id = Url.GetHashCode ().ToString ();
 		}
 
 		/// <summary>
@@ -258,11 +309,11 @@ namespace HPubSharp.iOS
 			//Read book.json from hpub
 			__BookJson = JObject.FromObject (jsonBook);
 
-			__Author = jsonBook ["author"].ToObject<IList<string>> ();
-			__Title = (string)jsonBook ["title"];
-			__Url = (string)jsonBook ["url"];
-			__Date = DateTime.Parse ((string)jsonBook ["date"]);
-			__Id = Url.GetHashCode ().ToString ();
+			Author = jsonBook ["author"].ToObject<IList<string>> ();
+			Title = (string)jsonBook ["title"];
+			Url = (string)jsonBook ["url"];
+			Date = DateTime.Parse ((string)jsonBook ["date"]);
+			Id = Url.GetHashCode ().ToString ();
 		}
 
 		/// <summary>
@@ -275,6 +326,16 @@ namespace HPubSharp.iOS
 			input = input.Trim ();
 			return input.StartsWith ("{", StringComparison.Ordinal) && input.EndsWith ("}", StringComparison.Ordinal)
 			|| input.StartsWith ("[", StringComparison.Ordinal) && input.EndsWith ("]", StringComparison.Ordinal);
+		}
+
+		bool __SetProperty<T> (ref T storage, T value, [CallerMemberName] string propertyName = null)
+		{
+			if (Object.Equals (storage, value)) {
+				return false;
+			}
+			storage = value;
+			_OnPropertyChanged (propertyName);
+			return true;
 		}
 
 		#endregion
