@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
-//using System.IO.Compression;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 using MiniZip.ZipArchive;
 using Newtonsoft.Json.Linq;
 
+// Analysis disable once InconsistentNaming
 namespace HPubSharp.iOS
 {
 	/// <summary>
@@ -20,18 +18,18 @@ namespace HPubSharp.iOS
 	{
 		#region Private Properties
 
-		private string __BasePath;
-		//TODO Add to device specific configurations.
-		private JObject __BookJson;
+		JObject __BookJson;
 
-		private IList<string> __Author;
-		private bool __AvailableLocally = false;
-		private IList<string> __Contents;
-		private DateTime __Date;
-		private string __Icon;
-		private string __Id;
-		private string __Title;
-		private string __Url;
+		IList<string> __Author;
+		IList<string> __Contents;
+		DateTime __Date;
+		#pragma warning disable 169
+		string __Icon;
+		//TODO: Impliment later;
+		#pragma warning restore 169
+		string __Id;
+		string __Title;
+		string __Url;
 
 		#endregion
 
@@ -41,13 +39,9 @@ namespace HPubSharp.iOS
 		/// Gets or sets the base path of the hpub document.
 		/// </summary>
 		/// <value>The base path.</value>
-		public string BasePath {
-			get {
-				return this.__BasePath;
-			}
-			set {
-				this.__BasePath = value;
-			}
+		public string BasePath {  //TODO Add to device specific configurations.
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -56,7 +50,7 @@ namespace HPubSharp.iOS
 		/// <value>The author's name.</value>
 		public IList<string> Author {
 			get {
-				return this.__Author;
+				return __Author;
 			}
 		}
 
@@ -65,12 +59,8 @@ namespace HPubSharp.iOS
 		/// </summary>
 		/// <value>Is the hpub downloaded locally. </value>
 		public bool AvailableLocally {
-			get {
-				return this.__AvailableLocally;
-			}
-			set {
-				this.__AvailableLocally = value;
-			}
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -79,7 +69,7 @@ namespace HPubSharp.iOS
 		/// <value>The contents.</value>
 		public IList<string> Contents {
 			get {
-				return this.__Contents;
+				return __Contents;
 			}
 		}
 
@@ -89,7 +79,7 @@ namespace HPubSharp.iOS
 		/// <value>The publish date.</value>
 		public DateTime Date {
 			get {
-				return this.__Date;
+				return __Date;
 			}
 		}
 
@@ -99,7 +89,7 @@ namespace HPubSharp.iOS
 		/// <value>The icon path.</value>
 		public string Icon {
 			get {
-				return this.__Icon;
+				return __Icon;
 			}
 		}
 
@@ -109,7 +99,7 @@ namespace HPubSharp.iOS
 		/// <value>The identifier.</value>
 		public string Id {
 			get {
-				return this.__Id;
+				return __Id;
 			}
 		}
 
@@ -119,7 +109,7 @@ namespace HPubSharp.iOS
 		/// <value>The title.</value>
 		public string Title {
 			get {
-				return this.__Title;
+				return __Title;
 			}
 		}
 
@@ -129,7 +119,7 @@ namespace HPubSharp.iOS
 		/// <value>The URL.</value>
 		public string Url {
 			get {
-				return this.__Url;
+				return __Url;
 			}
 		}
 
@@ -143,7 +133,7 @@ namespace HPubSharp.iOS
 		/// </summary>
 		public Book (string basePath)
 		{
-			this.__Init (basePath);
+			__Init (basePath);
 		}
 
 		/// <summary>
@@ -152,7 +142,7 @@ namespace HPubSharp.iOS
 		/// <param name="jsonBook">Json book.</param>
 		public Book (JObject jsonBook)
 		{
-			this.__Init (jsonBook);
+			__Init (jsonBook);
 		}
 
 		#endregion
@@ -166,13 +156,13 @@ namespace HPubSharp.iOS
 		{
 			try {
 				var webClient = new WebClient ();
-				var urlString = (this.Url.StartsWith ("book:")) ? this.Url.Replace ("book:", "http:") : this.Url;
-				if (!urlString.EndsWith (".hpub")) {
+				var urlString = (Url.StartsWith ("book:", StringComparison.Ordinal)) ? Url.Replace ("book:", "http:") : Url;
+				if (!urlString.EndsWith (".hpub", StringComparison.Ordinal)) {
 					urlString += ".hpub";
 				}
 				var Uri = new Uri (urlString);
 
-				string localDir = Path.Combine (Configs.BookshelfPath, this.Id);
+				string localDir = Path.Combine (Configs.BookshelfPath, Id);
 				string localFilename = (urlString.Split ('/').Last ()).Replace (".hpub", ".zip");
 				string localPath = Path.Combine (localDir, localFilename);
 
@@ -187,9 +177,7 @@ namespace HPubSharp.iOS
 				zip.UnzipOpenFile (localPath);
 				zip.UnzipFileTo (localDir, true);
 
-				zip.OnError += (sender, args) => {
-					Console.WriteLine ("Error while unzipping: {0}", args);
-				};
+				zip.OnError += (sender, args) => Console.WriteLine ("Error while unzipping: {0}", args);
 
 				zip.UnzipCloseFile ();
 
@@ -200,17 +188,17 @@ namespace HPubSharp.iOS
 
 				//this.__Init (localDir);  //TODO: Figure out why this doesn't work.
 
-				this.__BasePath = (localDir.EndsWith (Path.DirectorySeparatorChar.ToString ())) ? localDir : localDir + Path.DirectorySeparatorChar;
+				BasePath = (localDir.EndsWith (Path.DirectorySeparatorChar.ToString (), StringComparison.Ordinal)) ? localDir : localDir + Path.DirectorySeparatorChar;
 				//Read book.json from hpub
-				this.__BookJson = JObject.Parse (File.ReadAllText (System.IO.Path.Combine (this.BasePath + "book.json")));
-				this.__Contents = new List<string> ();
+				__BookJson = JObject.Parse (File.ReadAllText (Path.Combine (BasePath + "book.json")));
+				__Contents = new List<string> ();
 
 				//Get the contents of each content page
-				foreach (string value in this.__BookJson ["contents"].ToObject<IList<string>> ()) {
-					var temp = File.ReadAllText (System.IO.Path.Combine (this.__BasePath + value));
-					this.__Contents.Add (temp);
+				foreach (string value in __BookJson ["contents"].ToObject<IList<string>> ()) {
+					var temp = File.ReadAllText (Path.Combine (BasePath + value));
+					__Contents.Add (temp);
 				}
-				this.__AvailableLocally = true;
+				AvailableLocally = true;
 
 			} catch (Exception e) {
 				Console.WriteLine ("An error occurred: '{0}'", e);
@@ -226,55 +214,55 @@ namespace HPubSharp.iOS
 		/// Initilizes the the class usinge the basePath.
 		/// </summary>
 		/// <param name="basePath">Base path.</param>
-		private void __Init (string basePath)
+		void __Init (string basePath)
 		{
-			if (this.__IsJson (basePath)) { 
-				this.AvailableLocally = false;
+			if (__IsJson (basePath)) { 
+				AvailableLocally = false;
 				//Read book.json from hpub
-				this.__BookJson = JObject.Parse (basePath);
+				__BookJson = JObject.Parse (basePath);
 
-				this.__Author = this.__BookJson ["author"].ToObject<IList<string>> ();
-				this.__Title = (string)this.__BookJson ["title"];
-				this.__Url = (string)this.__BookJson ["url"];
-				this.__Date = DateTime.Parse ((string)this.__BookJson ["date"]);
+				__Author = __BookJson ["author"].ToObject<IList<string>> ();
+				__Title = (string)__BookJson ["title"];
+				__Url = (string)__BookJson ["url"];
+				__Date = DateTime.Parse ((string)__BookJson ["date"]);
 			} else if (File.Exists (basePath + @"book.json")) {
 
-				this.BasePath = (basePath.EndsWith (Path.DirectorySeparatorChar.ToString ())) ? basePath : basePath + Path.DirectorySeparatorChar;
+				BasePath = (basePath.EndsWith (Path.DirectorySeparatorChar.ToString (), StringComparison.Ordinal)) ? basePath : basePath + Path.DirectorySeparatorChar;
 				//Read book.json from hpub
-				this.__BookJson = JObject.Parse (File.ReadAllText (System.IO.Path.Combine (this.BasePath + "book.json")));
+				__BookJson = JObject.Parse (File.ReadAllText (Path.Combine (BasePath + "book.json")));
 
-				this.__Author = this.__BookJson ["author"].ToObject<IList<string>> ();
-				this.__Title = (string)this.__BookJson ["title"];
-				this.__Contents = new List<string> ();
-				this.__Url = (string)this.__BookJson ["url"];
-				this.__Date = DateTime.Parse ((string)this.__BookJson ["date"]);
+				__Author = __BookJson ["author"].ToObject<IList<string>> ();
+				__Title = (string)__BookJson ["title"];
+				__Contents = new List<string> ();
+				__Url = (string)__BookJson ["url"];
+				__Date = DateTime.Parse ((string)__BookJson ["date"]);
 
 				//Get the contents of each content page
-				foreach (string value in this.__BookJson ["contents"].ToObject<IList<string>> ()) {
-					var temp = File.ReadAllText (System.IO.Path.Combine (this.__BasePath + value));
-					this.__Contents.Add (temp);
+				foreach (string value in __BookJson ["contents"].ToObject<IList<string>> ()) {
+					var temp = File.ReadAllText (Path.Combine (BasePath + value));
+					__Contents.Add (temp);
 				}
-				this.__AvailableLocally = true;
+				AvailableLocally = true;
 			}
 
-			this.__Id = this.Url.GetHashCode ().ToString ();
+			__Id = Url.GetHashCode ().ToString ();
 		}
 
 		/// <summary>
 		/// Initilizes the the class usinge the book.json string.
 		/// </summary>
 		/// <param name="jsonBook">Json book.</param>
-		private void __Init (JObject jsonBook)
+		void __Init (JObject jsonBook)
 		{
-			this.AvailableLocally = false;
+			AvailableLocally = false;
 			//Read book.json from hpub
-			this.__BookJson = JObject.FromObject (jsonBook);
+			__BookJson = JObject.FromObject (jsonBook);
 
-			this.__Author = jsonBook ["author"].ToObject<IList<string>> ();
-			this.__Title = (string)jsonBook ["title"];
-			this.__Url = (string)jsonBook ["url"];
-			this.__Date = DateTime.Parse ((string)jsonBook ["date"]);
-			this.__Id = this.Url.GetHashCode ().ToString ();
+			__Author = jsonBook ["author"].ToObject<IList<string>> ();
+			__Title = (string)jsonBook ["title"];
+			__Url = (string)jsonBook ["url"];
+			__Date = DateTime.Parse ((string)jsonBook ["date"]);
+			__Id = Url.GetHashCode ().ToString ();
 		}
 
 		/// <summary>
@@ -282,11 +270,11 @@ namespace HPubSharp.iOS
 		/// </summary>
 		/// <returns><c>true</c>, if the Input is json, <c>false</c> otherwise.</returns>
 		/// <param name="input">Input.</param>
-		private bool __IsJson (string input)
+		static bool __IsJson (string input)
 		{
 			input = input.Trim ();
-			return input.StartsWith ("{") && input.EndsWith ("}")
-			|| input.StartsWith ("[") && input.EndsWith ("]");
+			return input.StartsWith ("{", StringComparison.Ordinal) && input.EndsWith ("}", StringComparison.Ordinal)
+			|| input.StartsWith ("[", StringComparison.Ordinal) && input.EndsWith ("]", StringComparison.Ordinal);
 		}
 
 		#endregion

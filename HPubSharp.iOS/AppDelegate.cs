@@ -3,6 +3,7 @@ using MonoTouch.UIKit;
 using Xamarin.Forms;
 using System;
 
+// Analysis disable once InconsistentNaming
 namespace HPubSharp.iOS
 {
 	// The UIApplicationDelegate for the application. This class is responsible for launching the

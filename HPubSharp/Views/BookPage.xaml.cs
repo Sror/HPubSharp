@@ -28,7 +28,7 @@ namespace HPubSharp
 			PageWebView.Source = HtmlSource;
 
 			//Set Content to WebView
-			this.Content = PageWebView;
+			Content = PageWebView;
 		}
 
 		/// <summary>
@@ -44,18 +44,13 @@ namespace HPubSharp
 			var HtmlSource = new HtmlWebViewSource ();
 
 			HtmlSource.Html = content;
-			if (Device.OS != TargetPlatform.iOS) {
-				// the BaseUrlWebViewRenderer does this for iOS, until bug is fixed
-				HtmlSource.BaseUrl = DependencyService.Get<IBaseUrl> ().Get (baseUrl);
-			} else {
-				HtmlSource.BaseUrl = baseUrl;
-			}
+			HtmlSource.BaseUrl = Device.OS != TargetPlatform.iOS ? DependencyService.Get<IBaseUrl> ().Get (baseUrl) : baseUrl;
 
 			//Add HTML Source to WebView
 			PageWebView.Source = HtmlSource;
 
 			//Set Content to WebView
-			this.Content = PageWebView;
+			Content = PageWebView;
 		}
 	}
 }

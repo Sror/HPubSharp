@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using Newtonsoft.Json.Linq;
 
+// Analysis disable once InconsistentNaming
 namespace HPubSharp.iOS
 {
 	/// <summary>
@@ -16,8 +16,8 @@ namespace HPubSharp.iOS
 	{
 		#region Private Properties
 
-		private IList<IBook> __Books = new List<IBook> ();
-		private string __BookshelfFeedUrl;
+		IList<IBook> __Books = new List<IBook> ();
+		string __BookshelfFeedUrl;
 
 		#endregion
 
@@ -25,17 +25,17 @@ namespace HPubSharp.iOS
 
 		public IList<IBook> Books { 
 			get { 
-				if (this.__Books.Count == 0) {
+				if (__Books.Count == 0) {
 					string[] Folders = Directory.GetDirectories (Path.Combine (Configs.BookshelfPath));
 
 					foreach (var Folder in Folders) {
 						if (File.Exists (Folder + @"/book.json")) {
-							this.AddBook (new Book (Folder + @"/"));
+							AddBook (new Book (Folder + @"/"));
 						}
 					}
 				}
 
-				return this.__Books; 
+				return __Books; 
 			} 
 		}
 
@@ -68,7 +68,7 @@ namespace HPubSharp.iOS
 		/// <param name="url">URL to json feed containing downloadable books.</param>
 		public Bookshelf (string url) : this ()
 		{
-			this.__BookshelfFeedUrl = url;
+			__BookshelfFeedUrl = url;
 		}
 
 		#endregion
@@ -81,7 +81,7 @@ namespace HPubSharp.iOS
 		/// <param name="book">Book.</param>
 		public void AddBook (IBook book)
 		{
-			this.__Books.Add (book);
+			__Books.Add (book);
 		}
 
 		/// <summary>
@@ -91,10 +91,10 @@ namespace HPubSharp.iOS
 		public async Task<IList<IBook>> DownloadableBooks ()
 		{ 
 			var BookList = new List<IBook> ();
-			var BookFeed = await this.__getBookshelfJSON (this.__BookshelfFeedUrl);
+			var BookFeed = await __getBookshelfJSON (__BookshelfFeedUrl);
 
 			foreach (JObject book in BookFeed) {
-				foreach (IBook ibook in this.Books) {
+				foreach (IBook ibook in Books) {
 					if (!ibook.Url.Equals ((string)book ["url"])) {
 						BookList.Add (new Book (book));
 					}
@@ -113,7 +113,7 @@ namespace HPubSharp.iOS
 		/// </summary>
 		/// <returns>The bookshelf JSON.</returns>
 		/// <param name="url">URL.</param>
-		private async Task<JArray> __getBookshelfJSON (string url)
+		async Task<JArray> __getBookshelfJSON (string url)
 		{
 			using (var httpClient = new HttpClient ()) {
 				var json = await httpClient.GetStringAsync (url);

@@ -26,25 +26,25 @@ namespace HPubSharp
 //			tapGestureRecognizer.NumberOfTapsRequired = 2; // double-tap
 //			tapGestureRecognizer.Tapped += this.__ShowNavigation;
 
-			this.Title = book.Title;
+			Title = book.Title;
 
 			foreach (string Content in book.Contents) {
-				this.Children.Add (new BookPage (Content, book.BasePath));
+				Children.Add (new BookPage (Content, book.BasePath));
 			}
 
 
 		}
 
-		private bool __HideNavigation ()
+		bool __HideNavigation ()
 		{
 			NavigationPage.SetHasNavigationBar (this, false);
 			return false;
 		}
 
-		private void __ShowNavigation (object sender, EventArgs eventArgs)
+		void __ShowNavigation (object sender, EventArgs eventArgs)
 		{
 			NavigationPage.SetHasNavigationBar (this, true);
-			Device.StartTimer (TimeSpan.FromSeconds (2), this.__HideNavigation);
+			Device.StartTimer (TimeSpan.FromSeconds (2), __HideNavigation);
 		}
 	}
 }

@@ -1,13 +1,12 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using MonoTouch.Foundation;
-using MonoTouch.UIKit;
 using HPubSharp;
 using HPubSharp.iOS;
 
 [assembly: ExportRenderer (typeof(BaseUrlWebView), typeof(BaseUrlWebViewRenderer))]
 
+// Analysis disable once InconsistentNaming
 namespace HPubSharp.iOS
 {
 	public class BaseUrlWebViewRenderer : WebViewRenderer

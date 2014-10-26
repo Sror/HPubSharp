@@ -23,7 +23,7 @@ namespace HPubSharp
 			int column = 0;
 			bool initilized = false;
 			//Load bookshelf content asyncronously.
-			this.Appearing += async (object sender, EventArgs e) => {
+			Appearing += async (sender, e) => {
 				if (!initilized) {
 				
 					var availableBooks = await bookshelf.DownloadableBooks ();
@@ -35,7 +35,7 @@ namespace HPubSharp
 					if (bookshelf.Books.Count != 0) {
 						foreach (var book in bookshelf.Books) {
 							if ((column % 4) == 0) {
-								this.BookShelfContentGrid.RowDefinitions.Add (new RowDefinition { Height = 200 });
+								BookShelfContentGrid.RowDefinitions.Add (new RowDefinition { Height = 200 });
 								column = 0;
 							}
 
@@ -54,18 +54,13 @@ namespace HPubSharp
 
 
 							//Is book local on downloadable.
-							if (book.AvailableLocally) {
-								tempButton.Text = "Read";
+							tempButton.Text = book.AvailableLocally ? "Read" : "Download";
 
-							} else {
-								tempButton.Text = "Download";
-					
-							}
 							//Button Click handler
-							tempButton.Clicked += async (object senderObj, EventArgs eventArg) => {  
+							tempButton.Clicked += async (senderObj, eventArg) => {  
 								var thisButton = (Button)senderObj;
 								if (thisButton.Text == "Read") {
-									Navigation.PushAsync (new BookView (book));
+									await Navigation.PushAsync (new BookView (book));
 								} else {
 									//Do we have a netowrk connection
 									if (!bookshelf.Online) {
@@ -81,11 +76,7 @@ namespace HPubSharp
 							var tempIcon = new Image ();
 							tempIcon.HeightRequest = 100;
 							if (book.Icon != null) {
-								if (book.Icon.StartsWith ("http")) {
-									tempIcon.Source = ImageSource.FromUri (new Uri (book.Icon));
-								} else {
-									tempIcon.Source = ImageSource.FromFile (book.Icon);
-								}
+								tempIcon.Source = book.Icon.StartsWith ("http", StringComparison.Ordinal) ? ImageSource.FromUri (new Uri (book.Icon)) : ImageSource.FromFile (book.Icon);
 							} else {
 								tempIcon.Source = ImageSource.FromFile ("Book-Icon.png");
 							}
@@ -101,7 +92,7 @@ namespace HPubSharp
 							};
 
 							//Add stack to gridview
-							this.BookShelfContentGrid.Children.Add (tempStack, column, this.BookShelfContentGrid.RowDefinitions.Count - 1);
+							BookShelfContentGrid.Children.Add (tempStack, column, BookShelfContentGrid.RowDefinitions.Count - 1);
 
 							//Incriment column counter
 							column++;
@@ -112,7 +103,7 @@ namespace HPubSharp
 			};
 
 			//Load MainView
-			this.Content = this.MainView;
+			Content = MainView;
 		}
 	}
 }
