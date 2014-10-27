@@ -19,6 +19,10 @@
 */*/*/Resource.designer.cs
 */*/*/*/Resource.designer.cs
 
+packages/
+Packages/
+Components/
+
 InAppPurchase/ComponentSample/Components/
 
 RazorTodoList/packages/
