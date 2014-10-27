@@ -1,23 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
-using System.Reflection;
 
 namespace HPubSharp
 {
 	public partial class BookIconView : StackLayout
 	{
-		private IBook Book;
 
 		public BookIconView (IBook book)
 		{
-			Book = book;
 
 			InitializeComponent ();
 
 			//Set Book Title binding
 			//TODO: Get this to work in zaml.
-			TitleLable.BindingContext = Book;
+			TitleLable.BindingContext = book;
 			TitleLable.SetBinding (Label.TextProperty, "Title");
 
 //			//Calculate luminance 
@@ -30,7 +26,7 @@ namespace HPubSharp
 			ReadOrDownloadButton.TextColor = luminance > 0.5 ? Color.Blue : Color.White;
 
 			//Is book local on downloadable.
-			ReadOrDownloadButton.Text = Book.AvailableLocally ? "Read" : "Download";
+			ReadOrDownloadButton.Text = book.AvailableLocally ? "Read" : "Download";
 
 			//Button Click handler
 			ReadOrDownloadButton.Clicked += async (senderObj, eventArg) => {  
@@ -39,12 +35,12 @@ namespace HPubSharp
 					await Navigation.PushAsync (new BookView (book));
 				} else {
 					//Do we have a netowrk connection
-					await Book.Download ();
+					await book.Download ();
 					thisButton.Text = "Read";
-//					if (!Book.Reachable ()) {
+//					if (!book.Reachable ()) {
 //						MessagingCenter.Send (this, "Connection Error");
 //					} else {
-//						await Book.Download ();
+//						await book.Download ();
 //						thisButton.Text = "Read";
 //					}
 				}
@@ -53,8 +49,8 @@ namespace HPubSharp
 
 			//Set Icon Image if exists.
 			Icon.HeightRequest = 100;
-			if (Book.Icon != null) {
-				Icon.Source = Book.Icon.StartsWith ("http", StringComparison.Ordinal) ? ImageSource.FromUri (new Uri (Book.Icon)) : ImageSource.FromFile (Book.Icon);
+			if (book.Icon != null) {
+				Icon.Source = book.Icon.StartsWith ("http", StringComparison.Ordinal) ? ImageSource.FromUri (new Uri (book.Icon)) : ImageSource.FromFile (book.Icon);
 			} 
 		}
 	}
