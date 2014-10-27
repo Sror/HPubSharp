@@ -9,6 +9,7 @@ namespace HPubSharp
 	/// </summary>
 	public partial class BookView : CarouselPage
 	{
+		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="HPubSharp.BookView"/> class by adding a BookPages for each content page
@@ -35,6 +36,10 @@ namespace HPubSharp
 
 		}
 
+		#endregion
+
+		#region Private Methods
+
 		bool __HideNavigation ()
 		{
 			NavigationPage.SetHasNavigationBar (this, false);
@@ -46,6 +51,8 @@ namespace HPubSharp
 			NavigationPage.SetHasNavigationBar (this, true);
 			Device.StartTimer (TimeSpan.FromSeconds (2), __HideNavigation);
 		}
+
+		#endregion
 	}
 }
 

@@ -27,6 +27,8 @@ namespace HPubSharp
 		string Url { get; }
 
 		Task Download ();
+
+		bool Reachable ();
 	}
 }
 

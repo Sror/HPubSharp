@@ -23,6 +23,10 @@ namespace HPubSharp.iOS
 
 		#region Getters/Setters
 
+		/// <summary>
+		/// Gets the books.
+		/// </summary>
+		/// <value>The books.</value>
 		public IList<IBook> Books { 
 			get { 
 				if (__Books.Count == 0) {

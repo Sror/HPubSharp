@@ -245,10 +245,22 @@ namespace HPubSharp.iOS
 			}
 		}
 
+		/// <summary>
+		/// Is the online book reachable.
+		/// </summary>
+		public bool Reachable ()
+		{
+			return Reachability.IsHostReachable (this.Url);
+		}
+
 		#endregion
 
 		#region Protected Methods
 
+		/// <summary>
+		/// On a property change allerts the PropertyChanged event handler.
+		/// </summary>
+		/// <param name="propertyName">Property name.</param>
 		protected virtual void _OnPropertyChanged (string propertyName)
 		{
 			PropertyChangedEventHandler handler = PropertyChanged;
@@ -317,17 +329,13 @@ namespace HPubSharp.iOS
 		}
 
 		/// <summary>
-		/// Checks if a string is json.
+		/// Sets the property and triggers the event handler to notify bound object.
 		/// </summary>
-		/// <returns><c>true</c>, if the Input is json, <c>false</c> otherwise.</returns>
-		/// <param name="input">Input.</param>
-		static bool __IsJson (string input)
-		{
-			input = input.Trim ();
-			return input.StartsWith ("{", StringComparison.Ordinal) && input.EndsWith ("}", StringComparison.Ordinal)
-			|| input.StartsWith ("[", StringComparison.Ordinal) && input.EndsWith ("]", StringComparison.Ordinal);
-		}
-
+		/// <returns><c>true</c>, if property was set, <c>false</c> otherwise.</returns>
+		/// <param name="storage">Storage.</param>
+		/// <param name="value">Value.</param>
+		/// <param name="propertyName">Property name.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		bool __SetProperty<T> (ref T storage, T value, [CallerMemberName] string propertyName = null)
 		{
 			if (Object.Equals (storage, value)) {
@@ -339,6 +347,23 @@ namespace HPubSharp.iOS
 		}
 
 		#endregion
+
+		#region Private Static Methods
+
+		/// <summary>
+		/// Checks if a string is json.
+		/// </summary>
+		/// <returns><c>true</c>, if the Input is json, <c>false</c> otherwise.</returns>
+		/// <param name="input">Input.</param>
+		static bool __IsJson (string input)
+		{
+			input = input.Trim ();
+			return input.StartsWith ("{", StringComparison.Ordinal) && input.EndsWith ("}", StringComparison.Ordinal)
+			|| input.StartsWith ("[", StringComparison.Ordinal) && input.EndsWith ("]", StringComparison.Ordinal);
+		}
+
+		#endregion
+
 	}
 }
 

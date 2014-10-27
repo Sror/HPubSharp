@@ -7,6 +7,8 @@ namespace HPubSharp
 	/// </summary>
 	public partial class BookPage: ContentPage
 	{
+		#region Constructors
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="HPubSharp.BookPage"/> class from the HTML content string.
 		/// </summary>
@@ -52,6 +54,8 @@ namespace HPubSharp
 			//Set Content to WebView
 			Content = PageWebView;
 		}
+
+		#endregion
 	}
 }
 

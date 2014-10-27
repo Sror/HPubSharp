@@ -7,6 +7,8 @@ namespace HPubSharp
 	/// </summary>
 	public class App
 	{
+		#region Constructors
+
 		/// <summary>
 		/// Returns the main view controller generated from the xaml.
 		/// </summary>
@@ -20,6 +22,8 @@ namespace HPubSharp
 		{
 			return new NavigationPage (new BookShelfPage (bookshelf));
 		}
+
+		#endregion
 	}
 }
 
