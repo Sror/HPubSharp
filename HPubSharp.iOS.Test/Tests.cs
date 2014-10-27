@@ -9,7 +9,7 @@ namespace HPubSharp.iOS.Test
 	[TestFixture]
 	public class BookTest
 	{
-		private Book Book = new Book ();
+		private Book Book = new Book (Configs.BookshelfPath + "book/");
 
 		[Test]
 		public void BookAuthor ()
@@ -38,5 +38,41 @@ namespace HPubSharp.iOS.Test
 			var FirstContent = File.ReadAllText (System.IO.Path.Combine (Book.BasePath + @"Book Cover.html"));
 			Assert.AreEqual (FirstContent, Book.Contents [0]);
 		}
+
+		[Test]
+		public void AvailableLocally ()
+		{
+			//Should be available Locally
+			Assert.IsTrue (Book.AvailableLocally);
+		}
+
+		[Test]
+		public void Date ()
+		{
+			//Is date parssed correctly
+			Assert.AreEqual (Book.Date, DateTime.Parse ("2011-06-15"));
+		}
+
+		[Test]
+		public void Icon ()
+		{
+			//Not set in json
+			Assert.IsNull (Book.Icon);
+		}
+
+		[Test]
+		public void Id ()
+		{
+			//Should not be null
+			Assert.IsNotNull (Book.Id);
+		}
+
+		[Test]
+		public void Url ()
+		{
+			//Should Be available Locally
+			Assert.AreEqual (Book.Url, "book://bakerframework.com/books/arthurconandoyle-thestudyinscarlet");
+		}
+
 	}
 }
