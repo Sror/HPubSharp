@@ -123,8 +123,8 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Bookshelf.cs" />
     <Compile Include="Helpers\Reachability.cs" />
-    <Compile Include="Helpers\BaseUrl_iOS.cs" />
-    <Compile Include="Helpers\BaseUrlWebViewRenderer.cs" />
+    <Compile Include="Renderers\BaseUrlWebViewRenderer.cs" />
+    <Compile Include="Renderers\BaseUrl_iOS.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
@@ -138,6 +138,7 @@
     <Folder Include="Bookshelf\" />
     <Folder Include="Models\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />

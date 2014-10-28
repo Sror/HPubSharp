@@ -64,6 +64,9 @@ namespace HPubSharp.iOS
 		{
 			//Default Constructor
 			// Future feature added here.
+			if (!Directory.Exists (Configs.BookshelfPath)) {
+				Directory.CreateDirectory (Configs.BookshelfPath);
+			}
 		}
 
 		/// <summary>
@@ -98,10 +101,14 @@ namespace HPubSharp.iOS
 			var BookFeed = await __getBookshelfJSON (__BookshelfFeedUrl);
 
 			foreach (JObject book in BookFeed) {
-				foreach (IBook ibook in Books) {
-					if (!ibook.Url.Equals ((string)book ["url"])) {
-						BookList.Add (new Book (book));
+				if (Books.Count > 0) {
+					foreach (IBook ibook in Books) {
+						if (!ibook.Url.Equals ((string)book ["url"])) {
+							BookList.Add (new Book (book));
+						}
 					}
+				} else {
+					BookList.Add (new Book (book));
 				}
 			}
 

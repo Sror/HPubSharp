@@ -15,7 +15,6 @@ namespace HPubSharp.iOS
 		{
 		
 			if (Device.OS == TargetPlatform.iOS) {
-				//TODO Un Hardcode the bookshelf Location
 				baseUrl = new NSUrl (NSBundle.MainBundle.BundlePath + baseUrl.AbsoluteString.TrimStart ('.'), true);
 			}
 			base.LoadHtmlString (s, baseUrl);
